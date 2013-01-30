@@ -87,7 +87,7 @@ template<class A>
 unsigned
 HIntLib::Private::QFB<A>::index (const type& u) const
 {
-   if (is0 (u)) return 0;
+   if (this->is0 (u)) return 0;
 
    // Split into numerator, denominator und unit
 
@@ -164,7 +164,7 @@ template<class A>
 unsigned
 HIntLib::Private::QFB<A>::order (const type& u) const
 {
-   if (is0 (u))  throwDivisionByZero();
+   if (this->is0 (u))  throwDivisionByZero();
    return (a.is1(u.den) && a.isUnit(u.num)) ? a.order (u.num) : 0;
 }
 
@@ -221,8 +221,8 @@ HIntLib::Private::QFB<A>::add (const type& u, const type& v) const
 {
    // Is one of the summands 0?
 
-   if (is0 (u))  return v;
-   if (is0 (v))  return u;
+   if (this->is0 (u))  return v;
+   if (this->is0 (v))  return u;
 
    // Are the denominators equal?
 
@@ -262,8 +262,8 @@ HIntLib::Private::QFB<A>::sub (const type& u, const type& v) const
 {
    // Is one of the summands 0?
 
-   if (is0 (u))  return neg (v);
-   if (is0 (v))  return u;
+   if (this->is0 (u))  return neg (v);
+   if (this->is0 (v))  return u;
 
    // Are the denominators equal?
 
@@ -301,7 +301,7 @@ template<class A>
 typename HIntLib::Private::QFB<A>::type
 HIntLib::Private::QFB<A>::mul (const type& u, const type& v) const
 {
-   if (is0 (u) || is0 (v))  return type();
+   if (this->is0 (u) || this->is0 (v))  return type();
 
    const base_type& d1 = genGcd (a, u.num, v.den);
    const base_type& d2 = genGcd (a, v.num, u.den);
@@ -352,8 +352,8 @@ template<class A>
 typename HIntLib::Private::QFB<A>::type
 HIntLib::Private::QFB<A>::div (const type& u, const type& v) const
 {
-   if (is0 (u))  return type();
-   if (is0 (v))  throwDivisionByZero();
+   if (this->is0 (u))  return type();
+   if (this->is0 (v))  throwDivisionByZero();
 
    const base_type& d1 = genGcd (a, u.num, v.num);
    const base_type& d2 = genGcd (a, v.den, u.den);  // d2 is always canonical
@@ -406,7 +406,7 @@ template<class A>
 typename HIntLib::Private::QFB<A>::type
 HIntLib::Private::QFB<A>::recip (const type& u) const
 {
-   if (is0 (u))  throwDivisionByZero();
+   if (this->is0 (u))  throwDivisionByZero();
 
    type result (u.den, u.num);
    a.mulByUnit (result.num, a.unitRecip (a.makeCanonical (result.den)));
@@ -422,7 +422,7 @@ template<class A>
 void
 HIntLib::Private::QFB<A>::reciprocal (type& u) const
 {
-   if (is0 (u))  throwDivisionByZero();
+   if (this->is0 (u))  throwDivisionByZero();
 
    std::swap (u.num, u.den);
    a.mulByUnit (u.num, a.unitRecip (a.makeCanonical (u.den)));
@@ -476,7 +476,7 @@ times (const type& u, unsigned k) const
 {
    typedef typename A::type base_type;
 
-   if (k == 0 || is0 (u))  return type();
+   if (k == 0 || this->is0 (u))  return type();
 
    const A& aa (this->a);
    const base_type d = genGcd (aa, base_type (k), u.den);
@@ -503,7 +503,7 @@ printShort (std::ostream& o, const type& u, PrintShortFlag f) const
 {
    const A& a (this->a);
 
-   if (is0 (u) || a.is1 (u.den))
+   if (this->is0 (u) || a.is1 (u.den))
    {
       a.printShort (o, u.num, f);
       return;
@@ -620,7 +620,7 @@ printShort (std::wostream& o, const type& u, PrintShortFlag f) const
 {
    const A& a (this->a);
 
-   if (is0 (u) || a.is1 (u.den))
+   if (this->is0 (u) || a.is1 (u.den))
    {
       a.printShort (o, u.num, f);
       return;
@@ -741,7 +741,7 @@ printShort (std::ostream& o, const type& u, PrintShortFlag f) const
 {
    const A& a (this->a);
 
-   if (! is0 (u) && ! a.is1 (u.den))
+   if (! this->is0 (u) && ! a.is1 (u.den))
    {
       Printer ss (o);
 
@@ -780,7 +780,7 @@ printShort (std::wostream& o, const type& u, PrintShortFlag f) const
 {
    const A& a (this->a);
 
-   if (! is0 (u) && ! a.is1 (u.den))
+   if (! this->is0 (u) && ! a.is1 (u.den))
    {
       WPrinter ss (o);
 
@@ -863,7 +863,7 @@ HIntLib::QuotientField<A>::print (std::ostream& o, const type& u) const
 {
    Private::Printer ss (o);
 
-   printShort (ss, u);
+   this->printShort (ss, u);
    ss << ' ';
    this->printSuffix (ss);
 }
@@ -875,7 +875,7 @@ HIntLib::QuotientField<A>::print (std::wostream& o, const type& u) const
 {
    Private::WPrinter ss (o);
 
-   printShort (ss, u);
+   this->printShort (ss, u);
    ss << L' ';
    this->printSuffix (ss);
 }

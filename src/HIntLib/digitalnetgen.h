@@ -113,13 +113,13 @@ public:
       : DigitalNetGen<A,S> (_arith, gm, _h, gm.getM(), 0, false, this->FULL) {}
 
    void first          (real *p, Index new_n)
-      { resetX          (this->n = new_n, p); }
+      { this->resetX          (this->n = new_n, p); }
    void firstDontScale (real *p, Index new_n)
-      { resetXDontScale (this->n = new_n, p); }
+      { this->resetXDontScale (this->n = new_n, p); }
    void next           (real *p)
-      { resetX          (++(this->n), p); }
+      { this->resetX          (++(this->n), p); }
    void nextDontScale  (real *p)
-      { resetXDontScale (++(this->n), p); }
+      { this->resetXDontScale (++(this->n), p); }
 };
 
 
@@ -143,9 +143,9 @@ public:
       : DigitalNetGen<A,S> (_arith, gm, _h, gm.getM(), 0, false, this->FULL) {}
 
    void first          (real *p, Index new_n)
-      { resetX (this->n = new_n, p); }
+      { this->resetX (this->n = new_n, p); }
    void firstDontScale (real *p, Index new_n)
-      { resetXDontScale (this->n = new_n, p); }
+      { this->resetXDontScale (this->n = new_n, p); }
 
    void next           (real *p)  { updateX(); this->copyXtoP (p); }
    void nextDontScale  (real *p)  { updateX(); this->copyXtoPDontScale (p); }
@@ -175,9 +175,9 @@ public:
       : DigitalNetGen<A,S> (_arith, gm, _h, gm.getM(), 0, false, this->FULL) {}
 
    void first          (real *p, Index new_n)
-      { resetX (this->n = new_n, p); }
+      { this->resetX (this->n = new_n, p); }
    void firstDontScale (real *p, Index new_n)
-      { resetXDontScale (this->n = new_n, p); }
+      { this->resetXDontScale (this->n = new_n, p); }
 
    void next           (real *p)  { updateX(); this->copyXtoP (p); }
    void nextDontScale  (real *p)  { updateX(); this->copyXtoPDontScale (p); }
@@ -210,9 +210,9 @@ public:
       : DigitalNetGen<A,S> (_arith, gm, _h, gm.getM(), 0, false, this->FULL) {}
 
    void first          (real *p, Index new_n)
-      { resetX (this->n = new_n, p); }
+      { this->resetX (this->n = new_n, p); }
    void firstDontScale (real *p, Index new_n)
-      { resetXDontScale (this->n = new_n, p); }
+      { this->resetXDontScale (this->n = new_n, p); }
 
    void next           (real *p)  { updateX(); this->copyXtoP (p); }
    void nextDontScale  (real *p)  { updateX(); this->copyXtoPDontScale (p); }

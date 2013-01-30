@@ -144,7 +144,7 @@ template<class A>
 void
 HIntLib::Private::FactorBB<A>::throwIfZero (const type& x) const
 {
-   if (is0 (x)) throw DivisionByZero();
+   if (this->is0 (x)) throw DivisionByZero();
 }
 
 
@@ -187,7 +187,7 @@ unsigned
 HIntLib::Private::FactorPolyB<A,HIntLib::infinite_tag>::
 index (const type& p) const
 {
-   if (is0 (p))  return 0;
+   if (this->is0 (p))  return 0;
 
    const unsigned total = this->m.degree();
    const unsigned num = p.degree() + 1;
@@ -213,7 +213,7 @@ template<class A>
 void
 HIntLib::Private::FactorPoly<A>::recipImp (const type& x, type& r) const
 {
-   throwIfZero (x);
+   this->throwIfZero (x);
    type g = genGcd (this->arithmetic(), x, this->m, r);
    if (! A::isUnit (g))  throw InvalidModularFieldSize (0);
    A::mulByUnit (r, A::unitRecip(A::toUnit (g)));
@@ -223,7 +223,7 @@ template<class A>
 void
 HIntLib::Private::FactorInteger<A>::recipImp (const type& x, type& r) const
 {
-   throwIfZero (x);
+   this->throwIfZero (x);
    type g = genGcd (this->arithmetic(), x, this->m, r);
    if (! A::is1 (g))  throw InvalidModularFieldSize (int (this->m));
    if (r < 0)  A::addTo (r, this->m);
@@ -245,7 +245,7 @@ HIntLib::Private::FactorRingB<A,HIntLib::integer_tag>::FactorRingB
 {
    typedef typename A::Factorization F;
    F f;
-   factor (f, modulus);
+   this->factor (f, modulus);
 
    nilradical = this->one();
    numberOfUnits = 1;
@@ -266,7 +266,7 @@ HIntLib::Private::FactorRingB<A,HIntLib::polyoverfield_tag>::init (finite_tag)
 {
    typedef typename A::Factorization F;
    F f;
-   factor (f, this->m);
+   this->factor (f, this->m);
 
    nilradical = this->one();
    numberOfUnits = 1;
@@ -274,7 +274,7 @@ HIntLib::Private::FactorRingB<A,HIntLib::polyoverfield_tag>::init (finite_tag)
    for (typename F::const_iterator i = f.begin(); i != f.end(); ++i)
    {
       A::mulBy (nilradical, i->first);
-      unsigned nor = numOfRemainders (i->first);
+      unsigned nor = this->numOfRemainders (i->first);
       numberOfUnits = numberOfUnits * (nor - 1) * powInt (nor, i->second - 1);
    }
 }
@@ -287,7 +287,7 @@ HIntLib::Private::FactorRingB<A,HIntLib::polyoverfield_tag>::init (infinite_tag)
 {
    typedef typename A::Factorization F;
    F f;
-   squarefreeFactor (f, this->m);  // squarefree factor sufficient for nilrad.
+   this->squarefreeFactor (f, this->m);  // squarefree factor sufficient for nilrad.
 
    nilradical = this->one();
 
@@ -343,7 +343,7 @@ unsigned
 HIntLib::Private::FactorFieldPolyB<A,HIntLib::finite_tag>::
 order (const type& u) const
 {
-   throwIfZero (u);
+   this->throwIfZero (u);
 
    if (facNMinus1.empty())  Prime::factor (facNMinus1, this->size() - 1);
 
@@ -356,11 +356,11 @@ order (const type& u) const
       const unsigned& prime = i->first;
 
       e /= powInt (prime, i->second);
-      type g1 = power (u, e);
+      type g1 = this->power (u, e);
 
-      while (! is1 (g1))
+      while (! this->is1 (g1))
       {
-         g1 = power (g1, prime);
+         g1 = this->power (g1, prime);
          e *= prime;
       }
    }
@@ -373,7 +373,7 @@ unsigned
 HIntLib::Private::FactorFieldB<A,HIntLib::integer_tag>::
 order(const type& u) const
 {
-   throwIfZero (u);
+   this->throwIfZero (u);
 
    if (facNMinus1.empty())  A::factor (facNMinus1, A::sub (this->m, A::one()));
 
@@ -386,11 +386,11 @@ order(const type& u) const
       const unsigned prime = i->first;
 
       e /= powInt (prime, i->second);
-      type g1 = power (u, e);
+      type g1 = this->power (u, e);
 
-      while (! is1 (g1))
+      while (! this->is1 (g1))
       {
-         g1 = power (g1, prime);
+         g1 = this->power (g1, prime);
          e *= prime;
       }
    }
@@ -403,7 +403,7 @@ unsigned
 HIntLib::Private::FactorFieldPolyB<A,HIntLib::infinite_tag>::
 order(const type& u) const
 {
-   throwIfZero (u);
+   this->throwIfZero (u);
 
    // XXX This is a complete hack!
    // We dream up some upper bound and check if we get to 1 in less than this
@@ -413,9 +413,9 @@ order(const type& u) const
    type x (u);
    unsigned n = 1;
 
-   while (! is1 (x))
+   while (! this->is1 (x))
    {
-      mulBy (x, u);
+      this->mulBy (x, u);
       ++n;
       if (n > max) return 0;
    }
@@ -434,14 +434,14 @@ bool
 HIntLib::Private::FactorFieldPolyB<A,HIntLib::finite_tag>::
 isPrimitiveElement (const type& u) const
 {
-   if (is0 (u)) return false;
+   if (this->is0 (u)) return false;
 
    const unsigned q = this->size() - 1;
    if (facNMinus1.empty())  Prime::factor (facNMinus1, q);
 
    for (FacI i = facNMinus1.begin(); i != facNMinus1.end(); ++i)
    {
-      if (is1 (power(u, q / i->first)))  return false;
+      if (this->is1 (this->power(u, q / i->first)))  return false;
    }
 
    return true;
@@ -452,7 +452,7 @@ bool
 HIntLib::Private::FactorFieldB<A,HIntLib::integer_tag>::
 isPrimitiveElement (const type& u) const
 {
-   if (is0 (u)) return false;
+   if (this->is0 (u)) return false;
 
    if (facNMinus1.empty())  A::factor (facNMinus1, A::sub (this->m, A::one()));
 
@@ -460,7 +460,7 @@ isPrimitiveElement (const type& u) const
 
    for (FacI i = facNMinus1.begin(); i != facNMinus1.end(); ++i)
    {
-      if (is1 (power(u, q / i->first)))  return false;
+      if (this->is1 (this->power(u, q / i->first)))  return false;
    }
 
    return true;

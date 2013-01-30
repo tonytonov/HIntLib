@@ -57,8 +57,8 @@ HIntLib::Private::PRBA_Rational<A>::isPrime (const type& p) const
 
    // Make sure p is square-free
 
-   if (! isSquarefree (p))  return false;
    
+   if (! this->isSquarefree (p))  return false;
    // we have to check for divisors up to degree  s
 
    int s = degree / 2;
@@ -217,8 +217,8 @@ cout << endl;
 
          type copy (pp);
          pp.mulByX();
-         mulBy (copy, aa.makeElement (intAlg.neg (nodes[j])));
-         addTo (pp, copy);
+         this->mulBy (copy, aa.makeElement (intAlg.neg (nodes[j])));
+         this->addTo (pp, copy);
       }
 
       lagrangeBasis [i] = pp;
@@ -238,7 +238,7 @@ cout << endl;
 
       for (int i = 0; i <= s; ++i)
       {
-         addTo (candidate, mul (lagrangeBasis[i],
+         this->addTo (candidate, this->mul (lagrangeBasis[i],
                                 aa.makeElement (divisors[i][counter[i]])));
       }
 
@@ -255,7 +255,7 @@ if (candidate.degree() >= 1)
 cout << endl;
 #endif
 
-      if (! candidate.isConstant() && isDivisor (p, candidate))  return false;
+      if (! candidate.isConstant() && this->isDivisor (p, candidate))  return false;
    }
    while (counter.next());
    

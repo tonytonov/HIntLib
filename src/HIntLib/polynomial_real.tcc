@@ -78,17 +78,17 @@ HIntLib::Private::PRBA_Complex<A>::roots (
 
    // Step 1: Initialization
 
-   const type pDeriv (derivative (p));
+   const type pDeriv (this->derivative (p));
    type q (p);
 
    while (! q.isConstant())
    {
-      const type qDeriv (derivative (q));
+      const type qDeriv (this->derivative (q));
 
       // Step 2: Initialize root finding
 
       coeff_type x (1.3, 0.31415926);
-      coeff_type y = evaluate (q, x);
+      coeff_type y = this->evaluate (q, x);
 
       // Newton iteration
 
@@ -98,7 +98,7 @@ HIntLib::Private::PRBA_Complex<A>::roots (
 
          // Determine step
 
-         coeff_type dx = aa.div (y, evaluate (qDeriv, x));
+         coeff_type dx = aa.div (y, this->evaluate (qDeriv, x));
 
          if (aa.is0 (dx))  break;
 
@@ -107,7 +107,7 @@ HIntLib::Private::PRBA_Complex<A>::roots (
             // Calculate next approximation
 
             coeff_type xNew = aa.sub (x, dx);
-            coeff_type yNew = evaluate (q, xNew);
+            coeff_type yNew = this->evaluate (q, xNew);
 
             // if the new value is an improvement, use it
 
@@ -129,8 +129,8 @@ HIntLib::Private::PRBA_Complex<A>::roots (
       // Step 5: Polish root
       // It is important to use the original polynomial!
 
-      aa.subFrom (x, aa.div (evaluate (p, x), evaluate (pDeriv, x)));
-      aa.subFrom (x, aa.div (evaluate (p, x), evaluate (pDeriv, x)));
+      aa.subFrom (x, aa.div (this->evaluate (p, x), this->evaluate (pDeriv, x)));
+      aa.subFrom (x, aa.div (this->evaluate (p, x), this->evaluate (pDeriv, x)));
 
       // Step 6: Divide
 
@@ -140,7 +140,7 @@ HIntLib::Private::PRBA_Complex<A>::roots (
 
       if (cpx || (rf.is0 (aa.im(x))))
       {
-         divByLinearFactor (q, x);
+         this->divByLinearFactor (q, x);
 
          type root;
          root.mulAndAdd (aa.one()).mulAndAdd (aa.neg (x));
@@ -159,7 +159,7 @@ HIntLib::Private::PRBA_Complex<A>::roots (
              .mulAndAdd (coeff_type (rf.add (rf.sqr (aa.re (x)),
                                              rf.sqr (aa.im (x)))));
 
-         divBy (q, root);
+         this->divBy (q, root);
 
          r.push_back (std::make_pair (root, multiplicity));
       }
@@ -183,7 +183,7 @@ HIntLib::Private::PRBA_Complex<A>::factor (
    // Perform squarefree factorization
 
    Factorization sff;
-   typename A::type unit = squarefreeFactor (sff, p);
+   typename A::type unit = this->squarefreeFactor (sff, p);
 
    // Final splitting of all squarefree factors
 
@@ -284,7 +284,7 @@ HIntLib::Private::PRBA_Real<A>::factor (
    // Perform squarefree factorization
 
    Factorization sff;
-   typename A::type unit = squarefreeFactor (sff, p);
+   typename A::type unit = this->squarefreeFactor (sff, p);
 
    // Construct complex extension field and complex polynomial ring
 

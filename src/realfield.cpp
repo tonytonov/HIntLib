@@ -138,7 +138,7 @@ unsigned
 L::RealField<T>::order (const type& r)
 {
    if (is1(r))  return 1;
-   if (is1(neg(r)))  return 2;
+   if (is1(RealField<T>::neg(r)))  return 2;
    return 0;
 }
 

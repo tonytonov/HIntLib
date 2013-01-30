@@ -1035,7 +1035,7 @@ public:
 
    bool isSquarefree (const type&) const;
    unit_type squarefreeFactor (Factorization&, const type&) const;
-   bool isCanonical (const type& p) const  { return isMonic(p); }
+   bool isCanonical (const type& p) const  { return this->isMonic(p); }
 
    // units
 
@@ -1053,7 +1053,7 @@ public:
 
    PG<MulCoeff,A> mulUnit (const type& p, const unit_type& u) const
       { return PG<MulCoeff,A> (this->a, p, u); }
-   void mulByUnit (type& p, const unit_type& u) const  { mulBy (p, u); }
+   void mulByUnit (type& p, const unit_type& u) const  { this->mulBy (p, u); }
 
    unit_type mulUnit (const unit_type& u1, const unit_type& u2) const
       { return this->a.mul (u1, u2); }

@@ -137,9 +137,9 @@ public:
       { if (correct)  this->c.prepareForGrayCode(); }
 
    void first          (real*p, Index _n = 0)
-      { resetX          (grayCode(this->n = _n), p); }
+      { this->resetX          (grayCode(this->n = _n), p); }
    void firstDontScale (real*p, Index _n = 0)
-      { resetXDontScale (grayCode(this->n = _n), p); }
+      { this->resetXDontScale (grayCode(this->n = _n), p); }
 
    void next          (real*);
    void nextDontScale (real*);
@@ -206,7 +206,7 @@ template<class T>
 inline
 void HIntLib::DigitalNet2Gray<T>::next (real* point)
 {
-   const T *vp = c (ls0 (this->n++));  // determine digit that changed
+   const T *vp = this->c (ls0 (this->n++));  // determine digit that changed
    const int DIM = this->getDimension();
 
    for (int d = 0; d != DIM; ++d)  this->alg.addTo (this->x[d], vp[d]);
@@ -218,7 +218,7 @@ template<class T>
 inline
 void HIntLib::DigitalNet2Gray<T>::nextDontScale (real* point)
 {
-   const T *vp = c (ls0 (this->n++)); // determine digit that changed
+   const T *vp = this->c (ls0 (this->n++)); // determine digit that changed
    const int DIM = this->getDimension();
 
    for (int d = 0; d != DIM; ++d)  this->alg.addTo (this->x[d], vp[d]);

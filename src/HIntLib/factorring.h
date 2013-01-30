@@ -63,7 +63,7 @@ protected:
 public:
    const type& modulus() const  { return m; }
    const A& arithmetic() const  { return *this; }
-   unsigned size() const  { return numOfRemainders (m); }
+   unsigned size() const  { return this->numOfRemainders (m); }
 
    using A::one;
    using A::is0;
@@ -294,7 +294,7 @@ public:
    bool isNilpotent (const type& u) const
       { return A::isDivisor (u, this->nilradical); }
 
-   type unitRecip (const type& u) const  { type r; recipImp (u,r); return r; }
+   type unitRecip (const type& u) const  { type r; this->recipImp (u,r); return r; }
 
    type mulUnit (const type& v, const unit_type& u) const { return mul  (v,u); }
    void mulByUnit     (type& v, const unit_type& u) const { mulBy(v,u); }
@@ -379,10 +379,10 @@ public:
       { return this->getCoeffAlgebra().extensionDegree() * this->m.degree(); }
 
    type frobenius (const type& u) const
-      { return power (u, this->characteristic()); }
+      { return this->power (u, this->characteristic()); }
    type invFrobenius (const type& u) const
    {
-      return power (u, powInt (this->characteristic(), extensionDegree() - 1));
+      return this->power (u, powInt (this->characteristic(), extensionDegree() - 1));
    }
 };
 
@@ -434,13 +434,13 @@ public:
    FactorField (const A& a, const type& modulus)
       : Private::FactorFieldB<A,typename A::algebra_category> (a, modulus) {}
 
-   type recip (const type& u) const  { type r; recipImp (u,r); return r; }
-   void reciprocal (type& u) const  { recipImp (u, u); }
+   type recip (const type& u) const  { type r; this->recipImp (u,r); return r; }
+   void reciprocal (type& u) const  { this->recipImp (u, u); }
 
    type div (const type& u, const type& v) const
-      { type r; recipImp (v, r); return mul (u, r); }
+      { type r; this->recipImp (v, r); return mul (u, r); }
    void divBy (type& u,  const type& v) const
-      { type r; recipImp (v, r); mulBy (u, r); }
+      { type r; this->recipImp (v, r); mulBy (u, r); }
 };
 
 }  // namespace HIntLib

@@ -463,7 +463,7 @@ template<typename A>
 typename HIntLib::Private::PRBA_Field<A>::unit_type
 HIntLib::Private::PRBA_Field<A>::makeCanonical (type &p) const
 {
-   if (is0(p) || isCanonical(p))  return this->a.one();
+   if (this->is0(p) || this->isCanonical(p))  return this->a.one();
 
    const unit_type l = p.lc();
 
@@ -497,7 +497,7 @@ HIntLib::Private::PRBA_Field<A>::
 isAssociate (const type &p1, const type &p2, unit_type &u) const
 {
    if (p1.degree() != p2.degree())  return false;
-   if (is0(p1))
+   if (this->is0(p1))
    {
       u = this->a.one();
       return true;

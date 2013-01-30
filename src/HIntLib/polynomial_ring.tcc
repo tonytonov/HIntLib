@@ -24,6 +24,7 @@
 #ifndef HINTLIB_POLYNOMIAL_TCC
 #include <HIntLib/polynomial.tcc>
 #endif
+#include <HIntLib/integerring.h>
 
 
 /********************  Polynomial Ring <ring_tag>  ***************************/
@@ -480,7 +481,7 @@ HIntLib::Private::PRBA_UFD<A>::makeCanonical (type& p) const
 {
    const A& aa (this->a);
 
-   if (is0 (p)) return aa.toUnit (aa.one());
+   if (this->is0 (p)) return aa.toUnit (aa.one());
 
    unit_type l = aa.makeCanonical (p.lc());
    unit_type il = aa.unitRecip (l);
@@ -508,7 +509,7 @@ HIntLib::Private::PRBA_UFD<A>::content (type& p) const
 {
    const A& aa (this->a);
 
-   if (is0 (p)) return coeff_type();
+   if (this->is0 (p)) return coeff_type();
 
    if (p.isConstant())
    {

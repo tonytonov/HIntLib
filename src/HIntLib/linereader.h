@@ -29,6 +29,7 @@
 
 #include <iosfwd>
 #include <string>
+#include <cstdio>
 
 
 namespace HIntLib

@@ -46,7 +46,7 @@ HIntLib::Private::PRBA_GF<A>::isPrimitive (const type& p) const
 {
    const int deg = p.degree();
 
-   if (deg <= 0 || ! isCanonical (p))  return false;
+   if (deg <= 0 || ! this->isCanonical (p))  return false;
 
    // calculate  a0 = (-1)^deg * p[0]
 
@@ -64,7 +64,7 @@ HIntLib::Private::PRBA_GF<A>::isPrimitive (const type& p) const
    const type xPowR
       = powerMod (*static_cast<const PolynomialRing<A>*>(this), polyx, r, p);
 
-   if (! isUnit (xPowR) || xPowR.ct() != a0)  return false;
+   if (! this->isUnit (xPowR) || xPowR.ct() != a0)  return false;
 
    // iii) For all divisors rr of r, degree of x^rr must be positive
 
@@ -115,7 +115,7 @@ HIntLib::Private::PRBA_GF<A>::isPrime (const type& p) const
    {
       for (unsigned i = 1; i < s; ++i)   // x+1, x+2,...
       {
-         if (this->a.is0 (evaluate (p, this->a.element(i))))  return false;
+         if (this->a.is0 (this->evaluate (p, this->a.element(i))))  return false;
       }
 
       if (degree <= 3)  return true;
@@ -133,7 +133,7 @@ HIntLib::Private::PRBA_GF<A>::isPrime (const type& p) const
             for (unsigned j = 0; j < s; ++j)
             {
                q[1] = this->a.element (j);
-               if (isDivisor (p, q))  return false;
+               if (this->isDivisor (p, q))  return false;
             }
          }
 
@@ -144,7 +144,7 @@ HIntLib::Private::PRBA_GF<A>::isPrime (const type& p) const
 
    // Make sure p is square-free
 
-   if (! isSquarefree (p))  return false;
+   if (! this->isSquarefree (p))  return false;
 
    // Berlekamp's Algorithm
 
@@ -161,8 +161,8 @@ HIntLib::Private::PRBA_GF<A>::isPrime (const type& p) const
 
    for (int row = 0; row < degree - 1; ++row)
    {
-      mulBy (q, factor);
-      reduce (q, p);
+      this->mulBy (q, factor);
+      this->reduce (q, p);
 
       for (int col = 0; col <= q.degree(); ++col)
       {
@@ -202,7 +202,7 @@ HIntLib::Private::PRBA_GF<A>::factor (
    // Perform squarefree factorization
 
    Factorization sff;
-   const coeff_type unit = squarefreeFactor (sff, p);
+   const coeff_type unit = this->squarefreeFactor (sff, p);
 
    const unsigned s = this->a.size();
 
@@ -230,13 +230,13 @@ HIntLib::Private::PRBA_GF<A>::factor (
       {
          const coeff_type u = this->a.element (i);
 
-         if (this->a.is0 (evaluate (p, u)))
+         if (this->a.is0 (this->evaluate (p, u)))
          {
             f.push_back (std::make_pair (
                      type().mulAndAdd (coeffOne)
                            .mulAndAdd (this->a.neg (u)),
                      it->second));
-            divByLinearFactor (p, u);
+            this->divByLinearFactor (p, u);
             if (p.degree() == 1)  break;
          }
       }
@@ -277,8 +277,8 @@ HIntLib::Private::PRBA_GF<A>::factor (
 
          this->a.subFrom (matrix [col * (degree + 1)], coeffOne);
 
-         mulBy (q, factor);
-         reduce (q, p);
+         this->mulBy (q, factor);
+         this->reduce (q, p);
       }
 
       // Calculate null space
@@ -338,7 +338,7 @@ HIntLib::Private::PRBA_GF<A>::factor (
                else if (split.degree() >= 1)
                {
                   polys.push_back (split);  // store factor
-                  divBy (*poly, split);     // reduce rest
+                  this->divBy (*poly, split);     // reduce rest
 
                   // Abort once all factors are found
                   if (polys.size() == numFactors)  goto end;
@@ -357,7 +357,7 @@ end:
       {
          // use makeCanonical(), because the result of genGcd() used above is
          //    not guaranteed to have this property
-         makeCanonical (*i);
+         this->makeCanonical (*i);
          f.push_back (std::make_pair (*i, it->second));
       }
    }

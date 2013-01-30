@@ -195,8 +195,8 @@ public:
    ModularArithmeticRing (unsigned modulus)
       : Private::ModularArithmetic<T> (modulus, false) {}
 
-   bool isUnit (const T& a) const  { return isUnitImp (a); }
-   bool isZerodivisor (const T& a) const { return ! isUnitImp (a); }
+   bool isUnit (const T& a) const  { return this->isUnitImp (a); }
+   bool isZerodivisor (const T& a) const { return ! this->isUnitImp (a); }
    bool isNilpotent (const T& a) const  { return a % this->nilradical == 0; }
 
    unsigned numUnits()      const  { return Prime::eulerPhi (this->m); }
@@ -208,11 +208,11 @@ public:
    static T toUnit   (const T& a)  { return a; }
    static T fromUnit (const T& a)  { return a; }
 
-   T unitRecip (const T& a) const  { return unitRecipImp(a); }
-   T mulUnit (const T& a, const T& b) const  { return mul(a,b); }
-   void mulByUnit (T& a,    const T& b) const  { mulBy(a,b); }
+   T unitRecip (const T& a) const  { return this->unitRecipImp(a); }
+   T mulUnit (const T& a, const T& b) const  { return this->mul(a,b); }
+   void mulByUnit (T& a,    const T& b) const  { this->mulBy(a,b); }
 
-   unsigned additiveOrder (T a) const  { return additiveOrderImp (a); }
+   unsigned additiveOrder (T a) const  { return this->additiveOrderImp (a); }
 
    T power (const T& a, unsigned k) const
       { return powerMod (unsigned(a), k, unsigned(this->m)); }
@@ -239,14 +239,14 @@ public:
 
    unsigned characteristic() const  { return this->m; }
 
-   T recip (const T& x) const { return T (recipImp (x)); }
-   void reciprocal (T& x) const { x = recipImp (x); }
+   T recip (const T& x) const { return T (this->recipImp (x)); }
+   void reciprocal (T& x) const { x = this->recipImp (x); }
 
-   T div  (const T& a, const T& b) const  { return mul (a, recip(b)); }
+   T div  (const T& a, const T& b) const  { return this->mul (a, recip(b)); }
    void divBy (T& a,  const T& b) const  { mulBy (a, recip(b)); }
 
-   unsigned order (const T& a) const    { return orderImp (a); }
-   bool isPrimitiveElement (const T& a) const  { return isPrimitiveImp (a); }
+   unsigned order (const T& a) const    { return this->orderImp (a); }
+   bool isPrimitiveElement (const T& a) const  { return this->isPrimitiveImp (a); }
    T power (const T& a, unsigned k) const
       { return powerModReduce (unsigned(a), k, unsigned(this->m)); }
 
