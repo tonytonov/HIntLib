@@ -243,7 +243,7 @@ public:
    void reciprocal (T& x) const { x = this->recipImp (x); }
 
    T div  (const T& a, const T& b) const  { return this->mul (a, recip(b)); }
-   void divBy (T& a,  const T& b) const  { mulBy (a, recip(b)); }
+   void divBy (T& a,  const T& b) const  { this->mulBy (a, recip(b)); }
 
    unsigned order (const T& a) const    { return this->orderImp (a); }
    bool isPrimitiveElement (const T& a) const  { return this->isPrimitiveImp (a); }

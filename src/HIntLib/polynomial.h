@@ -896,7 +896,7 @@ public:
 
    PG<Mul<zerodivisor_tag>,A> mulUnit (const type& p1, const type& p2) const
       { return PG<Mul<zerodivisor_tag>,A> (this->a, p1, p2); }
-   void mulByUnit (type& p1, const type& p2) const  { mulBy (p1, p2); }
+   void mulByUnit (type& p1, const type& p2) const  { this->mulBy (p1, p2); }
 
    unsigned additiveOrder (const type&) const;
 };

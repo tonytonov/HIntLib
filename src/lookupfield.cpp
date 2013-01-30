@@ -388,7 +388,7 @@ P::LookupFieldBase<T>::power (T x, unsigned k) const
    T result = one();
    for(;;)
    {
-      if (k & 1)  mulBy (result, x);
+      if (k & 1)  this->mulBy (result, x);
       if ((k >>= 1) == 0)  return result;
       square (x);
    }

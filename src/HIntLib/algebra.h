@@ -147,7 +147,7 @@ namespace HIntLib
 
 #define HINTLIB_TRIVIAL_DOMAIN_MEMBERS \
    unsigned additiveOrder (const type& a) const \
-      { return is0(a) ? 1 : this->characteristic(); }
+      { return this->is0(a) ? 1 : this->characteristic(); }
 
 #define HINTLIB_TRIVIAL_CYCLIC_MEMBERS \
    HINTLIB_TRIVIAL_DOMAIN_MEMBERS \

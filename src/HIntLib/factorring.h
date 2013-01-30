@@ -192,8 +192,8 @@ public:
       { A::addTo (u,v); if (u >= this->m) A::subFrom (u, this->m); }
 
    type neg (const type& u) const
-      { return ! is0(u) ? A::sub(this->m, u) : type(); }
-   void negate    (type& u) const  { if (! is0(u)) u = A::sub(this->m, u); }
+      { return ! this->is0(u) ? A::sub(this->m, u) : type(); }
+   void negate    (type& u) const  { if (! this->is0(u)) u = A::sub(this->m, u); }
 
    type  sub (const type& u, const type& v) const
       { type t = A::sub(u,v); return (t<0) ? A::add(t, this->m) : t; }
@@ -296,8 +296,8 @@ public:
 
    type unitRecip (const type& u) const  { type r; this->recipImp (u,r); return r; }
 
-   type mulUnit (const type& v, const unit_type& u) const { return mul  (v,u); }
-   void mulByUnit     (type& v, const unit_type& u) const { mulBy(v,u); }
+   type mulUnit (const type& v, const unit_type& u) const { return this->mul  (v,u); }
+   void mulByUnit     (type& v, const unit_type& u) const { this->mulBy(v,u); }
 
    const      type& fromUnit (const unit_type& unit) const  { return unit; }
    const unit_type&   toUnit (const      type& unit) const  { return unit; }
@@ -438,9 +438,9 @@ public:
    void reciprocal (type& u) const  { this->recipImp (u, u); }
 
    type div (const type& u, const type& v) const
-      { type r; this->recipImp (v, r); return mul (u, r); }
+      { type r; this->recipImp (v, r); return this->mul (u, r); }
    void divBy (type& u,  const type& v) const
-      { type r; this->recipImp (v, r); mulBy (u, r); }
+      { type r; this->recipImp (v, r); this->mulBy (u, r); }
 };
 
 }  // namespace HIntLib

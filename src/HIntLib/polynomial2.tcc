@@ -46,7 +46,7 @@ HIntLib::Polynomial2<T>::printShort (
 {
    // The zero-polynomial is a special case
 
-   if (is0())
+   if (this->is0())
    {
       o << "0";
       return;
@@ -105,7 +105,7 @@ HIntLib::Polynomial2<T>::printShort (
 {
    // The zero-polynomial is a special case
 
-   if (is0())
+   if (this->is0())
    {
       o << L"0";
       return;

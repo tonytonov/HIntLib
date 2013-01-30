@@ -99,7 +99,7 @@ template<typename T>
 unsigned
 L::RealField<T>::index (type r)
 {
-   if (is0 (r)) return 0;
+   if (RealField<T>::is0 (r)) return 0;
 
 #if 0
    real integerPart;
@@ -137,8 +137,8 @@ template<typename T>
 unsigned
 L::RealField<T>::order (const type& r)
 {
-   if (is1(r))  return 1;
-   if (is1(RealField<T>::neg(r)))  return 2;
+   if (RealField<T>::is1(r))  return 1;
+   if (RealField<T>::is1(RealField<T>::neg(r)))  return 2;
    return 0;
 }
 
