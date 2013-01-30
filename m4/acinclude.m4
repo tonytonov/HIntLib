@@ -19,7 +19,7 @@ AC_DEFUN([HL_CHECK_C_OR_CPP_HEADER],
 AC_DEFUN([HL_UNREACHABLE_CALLS_REMOVED],
 [AC_CACHE_CHECK([whether unreachable calls are removed],
 hl_cv_unreachable_calls_removed,
-[AC_LINK_IFELSE(AC_LANG_PROGRAM([[
+[AC_LINK_IFELSE([AC_LANG_PROGRAM([[
 #ifdef HAVE_LIMITS
 #include <limits>
 #endif
@@ -57,7 +57,7 @@ void X<T,a>::test()
 X<int, 8> x;
 x.test();
 exit (0);
-]]), hl_cv_unreachable_calls_removed=yes, hl_cv_unreachable_calls_removed=no)])
+]])], hl_cv_unreachable_calls_removed=yes, hl_cv_unreachable_calls_removed=no)])
 
 if test x"$hl_cv_unreachable_calls_removed" = xyes; then
    AC_DEFINE([UNREACHABLE_CALLS_REMOVED],1,
@@ -203,14 +203,14 @@ AC_DEFINE_UNQUOTED(translit([$1_FOR_$3_NUM],[ a-z],[_A-Z]),
 # Check if FLT_ROUNDS is constant
 AC_DEFUN([HL_FLT_ROUNDS_CONST],
 [AC_CACHE_CHECK([whether FLT_ROUNDS is constant], hl_cv_flt_rounds_const,
-[AC_COMPILE_IFELSE(AC_LANG_PROGRAM([[
+[AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 #include <float.h>
 ]],[[
 #if FLT_ROUNDS < 7
   ;
 #endif
   ;
-]]),
+]])],
 hl_cv_flt_rounds_const=yes, hl_cv_flt_rounds_const=no)])
 
 if test x"$hl_cv_flt_rounds_const" = xyes; then
@@ -224,14 +224,14 @@ fi
 # Check whether the Standard Template Library has the equal()-bug
 AC_DEFUN([HL_EQUAL_BUG],
 [AC_CACHE_CHECK([whether the STL has the equal()-bug], hl_cv_equal_bug,
-[AC_COMPILE_IFELSE(AC_LANG_PROGRAM([[
+[AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 #include <vector>
 struct X { int a; X() : a(7) {} };
 inline bool operator==(const X& x1, const X& x2)  { return x1.a == x2.a; }
 ]],[[
 std::vector<X> v1, v2;
 v1 == v2;
-]]),
+]])],
 hl_cv_equal_bug=no, hl_cv_equal_bug=yes)])
 
 if test x"$hl_cv_equal_bug" = xyes; then
@@ -246,7 +246,7 @@ fi
 AC_DEFUN([HL_COMPLEX_POW_BUG],
 [AC_CACHE_CHECK([whether std::pow(std::complex<long double>,int) is broken],
 hl_cv_complex_pow_bug,
-[AC_RUN_IFELSE(AC_LANG_PROGRAM([[
+[AC_RUN_IFELSE([AC_LANG_PROGRAM([[
 #ifdef HAVE_CSTDLIB
   #include <cstdlib>
   #define STD std::
@@ -258,7 +258,7 @@ hl_cv_complex_pow_bug,
 ]],[[
 std::complex<long double> x (0, 1);
 if (std::abs(std::pow (x, 1)) < .5)  STD exit (1);
-]]),
+]])],
 hl_cv_complex_pow_bug=no, hl_cv_complex_pow_bug=yes)])
 
 if test x"$hl_cv_complex_pow_bug" = xyes; then
@@ -290,7 +290,7 @@ fi
 # Check if we can use IEEE Magic
 AC_DEFUN([HL_IEEE_MAGIC_WORKS],
 [AC_CACHE_CHECK([whether IEEE magic works], hl_cv_ieee_magic_works,
-[AC_RUN_IFELSE(AC_LANG_PROGRAM([[
+[AC_RUN_IFELSE([AC_LANG_PROGRAM([[
 #include <stdlib.h>
 #if SIZEOF_UNSIGNED_INT >= 4
    #undef UNSIGNED_NOT_EQUAL_U32
@@ -335,16 +335,16 @@ AC_DEFUN([HL_IEEE_MAGIC_WORKS],
    x64.i |= (1ull << 51); if (x64.d != 1.5)   exit (1);
    x64.i |= (1ull << 50); if (x64.d != 1.75)  exit (1);
    x64.i ^= (1ull << 51); if (x64.d != 1.25)  exit (1);
-   
+
    union { float d; u32 i; } x32;
 
    x32.d = 1.0f; if (x32.d != 1.0f)  exit (1);
    x32.i |= (1ul << 22); if (x32.d != 1.5f)   exit (1);
    x32.i |= (1ul << 21); if (x32.d != 1.75f)  exit (1);
    x32.i ^= (1ul << 22); if (x32.d != 1.25f)  exit (1);
-   
+
    exit (0);
-]]),
+]])],
 hl_cv_ieee_magic_works=yes, hl_cv_ieee_magic_works=no,
 hl_cv_ieee_magic_works=no)])
 
@@ -360,11 +360,11 @@ fi
 AC_DEFUN([HL_STREAMS_SUPPORT_LOCALE],
 [
 AC_CACHE_CHECK([whether streams support locale], hl_cv_streams_support_locale,
-[AC_COMPILE_IFELSE(AC_LANG_PROGRAM([[
+[AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 #include <iostream>
 ]],[[
    std::cin.imbue (std::cout.getloc());
-]]),
+]])],
 hl_cv_streams_support_locale=yes, hl_cv_streams_support_locale=no)])
 
 if test x"$hl_cv_streams_support_locale" = xyes; then
@@ -379,12 +379,12 @@ AC_DEFUN([HL_OSTREAM_IS_BASIC_OSTREAM],
 [
 AC_CACHE_CHECK([whether std::ostream is a typedef for std::basic_ostream<char>],
 hl_cv_ostream_is_basic_ostream,
-[AC_COMPILE_IFELSE(AC_LANG_PROGRAM([[
+[AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
    #include<iostream>
    void f (std::basic_ostream<char>&);
 ]],[[
    f (std::cout);
-]]),
+]])],
 hl_cv_ostream_is_basic_ostream=yes, hl_cv_ostream_is_basic_ostream=no)])
 
 if test x"$hl_cv_ostream_is_basic_ostream" = xyes; then
@@ -399,7 +399,7 @@ AC_DEFUN([HL_UNICODE],
 [
 AC_CACHE_CHECK([whether wchar_t uses UNICODE characters],
 hl_cv_unicode,
-[AC_RUN_IFELSE(AC_LANG_PROGRAM([[
+[AC_RUN_IFELSE([AC_LANG_PROGRAM([[
 #ifdef HAVE_CSTDLIB
   #include <cstdlib>
   #define STD std::
@@ -430,7 +430,7 @@ hl_cv_unicode,
    {
       STD exit(1);
    }
-]]),
+]])],
 hl_cv_unicode=yes, hl_cv_unicode=no)])
 
 if test x"$hl_cv_unicode" = xyes; then
@@ -450,11 +450,11 @@ AC_DEFUN([HL_PROG_F77_REALLY_WORKS],
     [whether ${F77} really works], hl_cv_prog_f77_really_works,
     [
       AC_LANG_PUSH([Fortran 77])
-      AC_COMPILE_IFELSE(AC_LANG_PROGRAM(,
+      AC_COMPILE_IFELSE([AC_LANG_PROGRAM(,
         [
           INTEGER I
           I = 1
-        ]),
+        ])],
         hl_cv_prog_f77_really_works=yes,
         hl_cv_prog_f77_really_works=no)
       AC_LANG_POP(Fortran 77)
@@ -462,4 +462,3 @@ AC_DEFUN([HL_PROG_F77_REALLY_WORKS],
 ])
 
 dnl End of acinclude.m4
-

@@ -20,6 +20,7 @@ dnl 0.0.13.beta2:       6
 dnl 0.0.13:             7
 SHARED_VERSION_NUMBER=7
 AC_SUBST(SHARED_VERSION_NUMBER)
+AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_SRCDIR([src/HIntLib/integrator.h])
 AC_CONFIG_HEADERS(config.h)
 AC_CONFIG_FILES([Makefile src/Makefile src/HIntLib/Makefile share/Makefile tests/Makefile tests/toms659/Makefile tests/toms738/Makefile libtest/Makefile])
