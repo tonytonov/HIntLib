@@ -1,0 +1,55 @@
+# HIntLib specific:
+share/fkmat*.bin
+
+# Generated
+*_generated.cpp
+*_generated.h
+src/HIntLib/defaults.h
+src/bitop.cpp
+src/niederreitermatrix.cpp
+src/sobolmatrix.cpp
+tests/toms738/*.dat
+
+# Executables
+share/convert_matrix
+src/HIntLib/create_prime
+src/[a-z0-9]*
+tests/numericdiff
+tests/test_[a-z0-9]*
+tests/toms*/[a-z0-9]*
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+
+# http://www.gnu.org/software/automake
+
+Makefile.in
+
+# http://www.gnu.org/software/autoconf
+
+/autom4te.cache
+/aclocal.m4
+/compile
+/configure
+/depcomp
+/install-sh
+/missing
+/config.*
+INSTALL
+Makefile
+libtest
+libtool
+ltmain.sh
+m4/*.m4
+stamp-h1
