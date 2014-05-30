@@ -141,6 +141,9 @@ void RecvBuffer::unpack (void* buf, int n, MPI_Datatype t)
    MPI_Unpack (data, SIZE, &pos, buf, n, t, comm);
 }
 
+void bufferSendRecv (SendBuffer &out, int dest,   int destTag,
+                     RecvBuffer &in,  int source, int sourceTag);
+
 
 }  // namespace
 

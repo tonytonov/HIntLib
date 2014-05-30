@@ -232,6 +232,10 @@ void Hypercube::move (int i, real distance)
    center() [i] += distance;
 }
 
+class RecvBuffer;
+RecvBuffer &
+operator>> (RecvBuffer &b, Hypercube &h);
+
 }  // namespace HIntLib
 
 #endif

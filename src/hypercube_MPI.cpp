@@ -43,7 +43,7 @@ L::Hypercube::getMPIDatatype () const
    return newType;
 }
 
-L::Hypercube::Hypercube (unsigned _dim, RecvBuffer &b)
+L::Hypercube::Hypercube (int _dim, RecvBuffer &b)
    : dim (_dim), data (2 * _dim)
 {
    b >> *this;
@@ -85,8 +85,8 @@ L::Hypercube::recv (int source, int tag, MPI_Comm comm, MPI_Status *status)
     return res;
 }
 
-L::Hypercube::Hypercube (unsigned dim,
-                      int source, int tag, MPI_Comm comm, MPI_Status *status)
+L::Hypercube::Hypercube (int dim,
+                         int source, int tag, MPI_Comm comm, MPI_Status *status)
    : dim (dim), data (2 * dim)
 {
    recv (source, tag, comm, status);
