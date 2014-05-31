@@ -11,7 +11,7 @@ Appendix A of the manual deals with building and installing HIntLib.
 The official website can be found at http://mint.sbg.ac.at/HIntLib/
 
 Specific instructions for Debian-based distributions
-===================
+-------------------
 
 To install this development version from this repository, use the following chain:
 
@@ -22,7 +22,7 @@ To install this development version from this repository, use the following chai
  - `sudo ldconfig`
  
 To install with MPI enabled, add the appropriate flag:
- - `./configure --enable-static --enable-shared MPI_HEADER_PATH=/path/to/mpi.h --prefix=/usr
+ - `./configure --enable-static --enable-shared MPI_HEADER_PATH=/path/to/mpi.h --prefix=/usr`
  
 For instance, with these packages installed
 
