@@ -10,13 +10,13 @@ Appendix A of the manual deals with building and installing HIntLib.
 
 The official website can be found at http://mint.sbg.ac.at/HIntLib/
 
-Specific instructions for Debian-based distributions
+Instructions for Debian-based distributions
 -------------------
 
 To install this development version from this repository, use the following chain:
 
  - `./autogen.sh`
- - `./configure --enable-static --prefix=/usr
+ - `./configure --enable-static --prefix=/usr`
  - `make -j 4`
  - `sudo checkinstall` (at this point make sure that the name and the version are detected automatically; if not, edit them to be `hintlib` and `0.0.13-github`, correspondingly)
  - `sudo ldconfig`
