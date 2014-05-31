@@ -84,7 +84,7 @@ MPI_Datatype L::Region::getMPIDatatype () const
    return newType;
 }
 
-L::Region::Region (unsigned dim, RecvBuffer &b)
+L::Region::Region (int dim, RecvBuffer &b)
    : h (dim)
 {
    MPI_Datatype t = getMPIDatatype ();
